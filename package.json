@@ -31,6 +31,7 @@
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.0",
     "koa2-cors": "^2.0.6",
+    "koa2-swagger-ui": "^5.7.0",
     "md5": "^2.2.1",
     "mongodb": "^5.0.1",
     "mysql2": "^2.1.0",
@@ -38,6 +39,7 @@
     "pug": "^2.0.3",
     "sequelize": "^6.3.3",
     "superagent": "^5.3.1",
+    "swagger-jsdoc": "^6.2.8",
     "validator": "^13.1.1"
   },
   "devDependencies": {

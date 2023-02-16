@@ -6,7 +6,7 @@ const { JWT_PRIVATE_KEY, JWT_EXPIRE_TIME, CRYPTO_SECRET_KEY } = require('../conf
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 
 
-router.prefix('/vue-element-admin/user')
+router.prefix('/user')
 
 router.post('/login', async function (ctx, next) {
   if (ctx.request.body.username === '' || ctx.request.body.password === '') {
