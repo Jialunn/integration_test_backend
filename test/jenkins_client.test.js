@@ -6,8 +6,8 @@ const jenkins = new Jenkins({
 
 test("test jenkins create with no prarm", async () => {
     const result = await jenkins.job.build("mmcv/test_no_param")
-    console.log(result)
-    expect(result).toBeInstanceOf(Number)
+    console.log(typeof(result))
+    expect(typeof(result)).toBe("number")
 })
 
 
@@ -16,7 +16,7 @@ test("test jenkins create with default prarm", async () => {
         name: "mmcv/test_with_param",
         parameters: {},
     })
-    expect(result).toBeInstanceOf(Number)
+    expect(typeof (result)).toBe("number")
 })
 
 
@@ -25,5 +25,5 @@ test("test jenkins create with prarm", async () => {
         name: "mmcv/test_with_param",
         parameters: { ECHO_PARAM: "special" },
     })
-    expect(result).toBeInstanceOf(Number)
+    expect(typeof (result)).toBe("number")
 })
