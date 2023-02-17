@@ -6,7 +6,6 @@ const jenkins = new Jenkins({
 
 test("test jenkins create with no prarm", async () => {
     const result = await jenkins.job.build("mmcv/test_no_param")
-    console.log(typeof(result))
     expect(typeof(result)).toBe("number")
 })
 

@@ -1,6 +1,3 @@
-const { TextEncoder, TextDecoder } = require('util')
-global.TextEncoder = TextEncoder
-global.TextDecoder = TextDecoder
 const mongo_client = require("../src/db/mongo")
 
 test("test mongodb client connect", async () => {

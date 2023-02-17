@@ -1,3 +1,6 @@
+const { TextEncoder, TextDecoder } = require('util')
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder
 const { MongoClient } = require('mongodb') 
 const { MONGO_CONF } = require('../conf/db')
 
