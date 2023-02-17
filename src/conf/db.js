@@ -13,6 +13,13 @@ let MYSQL_CONF = {
     database: 'integration_test'
 }
 
+let MONGO_CONF = {
+    host: 'localhost',
+    port: '27017',
+    name: '',
+    passwd: ''
+}
+
 if (isProd) {
     REDIS_CONF = {
         // 线上的 redis 配置
@@ -29,9 +36,17 @@ if (isProd) {
         database: 'integration_test'
     }
 
+    MONGO_CONF = {
+        host: 'localhost',
+        port: '27017',
+        name: 'root',
+        passwd: 'password'
+    }
+
 }
 
 module.exports = {
     REDIS_CONF,
-    MYSQL_CONF
+    MYSQL_CONF,
+    MONGO_CONF
 }

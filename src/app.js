@@ -6,9 +6,9 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('koa2-cors')
-const koaSwagger = require('koa2-swagger-ui')
-const swagger = require('./util/swagger')
+const { koaSwagger } = require('koa2-swagger-ui')
 
+const swagger = require('./utils/swagger')
 const index = require('./routes/index')
 const admin = require('./routes/admin')
 
@@ -38,14 +38,14 @@ app.use(function (ctx, next) {
 onerror(app)
 
 app.use(koaSwagger({
-  routePrefix: '/swagger', // host at /swagger instead of default /docs
+  routePrefix: '/swagger',
   swaggerOptions: {
-    url: '/swagger.json', // example path to json 其实就是之后swagger-jsdoc生成的文档地址
+    url: '/doc/swagger.json',
   },
 }))
 
 // middlewares
-app.use(jwtAuth)
+// app.use(jwtAuth)
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']
 }))

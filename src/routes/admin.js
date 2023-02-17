@@ -1,6 +1,6 @@
 const router = require('koa-router')()
 const jwt = require('jsonwebtoken')
-const { getAdminByUsername } = require('../service/adminService')
+const { getAdminByUsername } = require('../services/adminService')
 const { md5 } = require('../utils/md5')
 const { JWT_PRIVATE_KEY, JWT_EXPIRE_TIME, CRYPTO_SECRET_KEY } = require('../conf/constant')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')

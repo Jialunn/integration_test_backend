@@ -1,5 +1,11 @@
 const router = require('koa-router')()
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     description:  Endpoint for everything
+ */
 router.get('/', async (ctx, next) => {
   await ctx.render('index', {
     title: 'Hello Koa 2!'
