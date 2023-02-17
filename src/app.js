@@ -11,8 +11,11 @@ const { koaSwagger } = require('koa2-swagger-ui')
 const swagger = require('./utils/swagger')
 const index = require('./routes/index')
 const admin = require('./routes/admin')
+const benchmarkTest = require('./routes/benchmarkTest')
 
 const jwtAuth = require('./middleWare/jwtAuth')
+
+const { isProd } = require('../utils/env')
 
 // cors
 app.use(cors())
@@ -37,13 +40,14 @@ app.use(function (ctx, next) {
 // error handler
 onerror(app)
 
-app.use(koaSwagger({
-  routePrefix: '/swagger',
-  swaggerOptions: {
-    url: '/doc/swagger.json',
-  },
-}))
-
+if (!isProd) {
+  app.use(koaSwagger({
+    routePrefix: '/swagger',
+    swaggerOptions: {
+      url: '/doc/swagger.json',
+    },
+  }))
+}
 // middlewares
 // app.use(jwtAuth)
 app.use(bodyparser({
@@ -68,6 +72,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(admin.routes(), admin.allowedMethods())
+app.use(benchmarkTest.routes(), benchmarkTest.allowedMethods())
 app.use(swagger.routes(), swagger.allowedMethods())
 
 // error-handling
