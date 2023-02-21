@@ -28,7 +28,7 @@ class SuccessModel extends BaseModel {
 class ErrorModel extends BaseModel {
     constructor({ code = -1, data = {}, msg = '' }) {
         super({
-            data
+            data, msg
         })
     }
 }
