@@ -2,13 +2,13 @@
  * 基础模块
  */
 class BaseModel {
-    constructor({code, data, error}) {
+    constructor({code, data, msg}) {
         this.code = code
         if (data) {
             this.data = data
         }
-        if(error) {
-            this.error = error
+        if (msg) {
+            this.msg = msg
         }
     }
 }
@@ -26,7 +26,7 @@ class SuccessModel extends BaseModel {
  * 失败的数据模型
  */
 class ErrorModel extends BaseModel {
-    constructor({ code = -1, data = {}, error = 500 }) {
+    constructor({ code = -1, data = {}, msg = '' }) {
         super({
             data
         })

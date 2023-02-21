@@ -14,10 +14,11 @@ let MYSQL_CONF = {
 }
 
 let MONGO_CONF = {
-    host: 'localhost',
+    host: '10.140.52.25',
     port: '27017',
-    name: '',
-    passwd: ''
+    name: 'root',
+    passwd: 'password',
+    database: 'benchmark_test'
 }
 
 if (isProd) {
@@ -37,10 +38,11 @@ if (isProd) {
     }
 
     MONGO_CONF = {
-        host: 'localhost',
+        host: '10.140.52.25',
         port: '27017',
         name: 'root',
-        passwd: 'password'
+        passwd: 'password',
+        database: 'benchmark_test'
     }
 
 }

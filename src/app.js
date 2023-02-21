@@ -15,7 +15,7 @@ const benchmarkTest = require('./routes/benchmarkTest')
 
 const jwtAuth = require('./middleWare/jwtAuth')
 
-const { isProd } = require('../utils/env')
+const { isProd } = require('./utils/env')
 
 // cors
 app.use(cors())

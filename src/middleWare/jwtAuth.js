@@ -6,6 +6,7 @@ const jwtAuth = koaJwt({
 }).unless({
     path: [
         '/',
+        '/benchmark_test',
     ],
 })
 

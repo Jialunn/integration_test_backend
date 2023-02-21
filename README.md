@@ -5,6 +5,8 @@
 
 ## Intro
 
+- This Platform is made for Integration test of OpenMMLab's algorithm repo
+
 ## Design
 
 ### Integration Test
@@ -13,6 +15,12 @@
 2. test history list and it's result(job_id, result, no log)
 3. start a test and can stop it
 4. daily test schedule(node-scheduler)
+
+#### database(mysql)
+
+| domain | data type | size |
+|-|-|-|
+| id | VARCHAR | 32 |
 
 ### Benchmark Test
 
@@ -23,7 +31,10 @@
    1. repo, repo version, test version, **all model list**
    2. model test result(success. if fail, why)
    3. test history of one model
-   4. 
+
+#### database(mysql)
+
+#### database(mongodb)
 
 ### Compatible Test
 
@@ -31,6 +42,8 @@
 2. maintain the tree of dependency
 
 > TODO: parameters of test
+
+#### database(mysql)
 
 ## Method
 
