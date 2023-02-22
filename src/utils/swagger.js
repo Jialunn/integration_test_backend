@@ -7,9 +7,7 @@ const swaggerDefinition = {
         title: 'Integration test API Doc',
         version: '0.0.1',
         description: 'API doc of integration test platform',
-    },
-    host: 'localhost:5158',
-    basePath: '/'
+    }
 };
 
 const options = {

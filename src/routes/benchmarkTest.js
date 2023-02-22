@@ -19,8 +19,6 @@ router.prefix('/benchmark_test')
  *   post:
  *     tags:
  *       - benchmark_test
- *     consumes:
- *       - application/json
  *     requestBody:
  *       content:
  *         application/json:
@@ -31,7 +29,7 @@ router.prefix('/benchmark_test')
  *                  type: string
  *                  default: test
  *               success:
- *                  type: bool
+ *                  type: boolean
  *                  default: true
  *               page:
  *                  type: number
@@ -41,7 +39,7 @@ router.prefix('/benchmark_test')
  *                - page
  *     responses:
  *       '200':
- *          description: Successful operation
+ *          description: OK
  */
 router.post('/list', async function (ctx, next) {
     // TODO Validation
@@ -70,8 +68,6 @@ router.post('/list', async function (ctx, next) {
  *   post:
  *     tags:
  *       - benchmark_test
- *     consumes:
- *       - application/json
  *     requestBody:
  *       content:
  *         application/json:
@@ -88,7 +84,7 @@ router.post('/list', async function (ctx, next) {
  *                  type: string
  *                  default: 3.0.0rc5
  *               success:
- *                  type: bool
+ *                  type: boolean
  *                  default: true
  *               page:
  *                  type: number
@@ -100,7 +96,7 @@ router.post('/list', async function (ctx, next) {
  *                - page
  *     responses:
  *       '200':
- *          description: Successful operation
+ *          description: OK
  */
 router.post('/list_by_repo_and_version', async function (ctx, next) {
     // TODO Validation
@@ -131,8 +127,6 @@ router.post('/list_by_repo_and_version', async function (ctx, next) {
  *   post:
  *     tags:
  *       - benchmark_test
- *     consumes:
- *       - application/json
  *     requestBody:
  *       content:
  *         application/json:
@@ -149,7 +143,7 @@ router.post('/list_by_repo_and_version', async function (ctx, next) {
  *                  type: string
  *                  default: 3.0.0rc5
  *               success:
- *                  type: bool
+ *                  type: boolean
  *                  default: true
  *               page:
  *                  type: number
@@ -161,7 +155,7 @@ router.post('/list_by_repo_and_version', async function (ctx, next) {
  *                - page
  *     responses:
  *       '200':
- *          description: Successful operation
+ *          description: OK
  */
 router.post('/list_by_repo_and_branch', async function (ctx, next) {
     // TODO Validation
@@ -200,8 +194,6 @@ router.post('/add_item', async function (ctx, next) {
  *   post:
  *     tags:
  *       - benchmark_test
- *     consumes:
- *       - application/json
  *     requestBody:
  *       content:
  *         application/json:
@@ -219,7 +211,7 @@ router.post('/add_item', async function (ctx, next) {
  *                - test_type
  *     responses:
  *       '200':
- *          description: Successful operation
+ *          description: OK
  */
 router.post('/delete_item_by_id', async function (ctx, next) {
     // TODO Validation
@@ -242,8 +234,6 @@ router.post('/delete_item_by_id', async function (ctx, next) {
  *   post:
  *     tags:
  *       - benchmark_test
- *     consumes:
- *       - application/json
  *     requestBody:
  *       content:
  *         application/json:
@@ -265,7 +255,7 @@ router.post('/delete_item_by_id', async function (ctx, next) {
  *                - data
  *     responses:
  *       '200':
- *          description: Successful operation
+ *          description: OK
  */
 router.post('/update_item_by_id', async function (ctx, next) {
     // TODO Validation
@@ -289,8 +279,6 @@ router.post('/update_item_by_id', async function (ctx, next) {
  *   post:
  *     tags:
  *       - benchmark_test
- *     consumes:
- *       - application/json
  *     requestBody:
  *       content:
  *         application/json:
@@ -316,7 +304,7 @@ router.post('/update_item_by_id', async function (ctx, next) {
  *                - page
  *     responses:
  *       '200':
- *          description: Successful operation
+ *          description: OK
  * 
  */
 router.post('/get_model_history', async function (ctx, next) {
@@ -364,6 +352,9 @@ router.post('/add_group', async function (ctx, next) {
  *   post:
  *     tags:
  *        - benchmark_test
+ *     responses:
+ *       '200':
+ *          description: OK
  */
 router.post('/list_group', async function (ctx, next) {
     ctx.body = {

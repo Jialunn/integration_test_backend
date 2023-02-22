@@ -16,6 +16,7 @@ const benchmarkTest = require('./routes/benchmarkTest')
 const jwtAuth = require('./middleWare/jwtAuth')
 
 const { isProd } = require('./utils/env')
+const { el } = require('date-fns/locale')
 
 // cors
 app.use(cors())
@@ -40,6 +41,7 @@ app.use(function (ctx, next) {
 // error handler
 onerror(app)
 
+// middlewares
 if (!isProd) {
   app.use(koaSwagger({
     routePrefix: '/swagger',
@@ -47,8 +49,9 @@ if (!isProd) {
       url: '/doc/swagger.json',
     },
   }))
+} else {
+  app.use(jwtAuth)
 }
-// middlewares
 // app.use(jwtAuth)
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']

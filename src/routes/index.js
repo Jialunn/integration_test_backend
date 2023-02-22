@@ -4,7 +4,12 @@ const router = require('koa-router')()
  * @swagger
  * /:
  *   get:
+ *     tags: 
+ *       - index
  *     description:  Endpoint for everything
+ *     responses:
+ *       '200':
+ *          description: OK
  */
 router.get('/', async (ctx, next) => {
   await ctx.render('index', {
@@ -16,7 +21,12 @@ router.get('/', async (ctx, next) => {
  * @swagger
  * /string:
  *   get:
+ *     tags: 
+ *       - index
  *     description:  test response
+ *     responses:
+ *       '200':
+ *          description: OK
  */
 router.get('/string', async (ctx, next) => {
   ctx.body = 'koa2 string'
