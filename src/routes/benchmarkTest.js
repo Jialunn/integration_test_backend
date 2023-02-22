@@ -19,21 +19,29 @@ router.prefix('/benchmark_test')
  *   post:
  *     tags:
  *       - benchmark_test
- *     produces:
+ *     consumes:
  *       - application/json
- *     parameters:
- *       - name: test_type
- *         in: formData
- *         required: true
- *         type: string
- *       - name: page
- *         in: formData
- *         required: true
- *         type: number
- *       - name: success
- *         in: formData
- *         required: false
- *         type: bool
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               test_type:
+ *                  type: string
+ *                  default: test
+ *               success:
+ *                  type: bool
+ *                  default: true
+ *               page:
+ *                  type: number
+ *                  default: 0
+ *             required:
+ *                - test_type
+ *                - page
+ *     responses:
+ *       '200':
+ *          description: Successful operation
  */
 router.post('/list', async function (ctx, next) {
     // TODO Validation
@@ -62,29 +70,37 @@ router.post('/list', async function (ctx, next) {
  *   post:
  *     tags:
  *       - benchmark_test
- *     produces:
+ *     consumes:
  *       - application/json
- *     parameters:
- *       - name: repo
- *         in: formData
- *         required: true
- *         type: string
- *       - name: test_type
- *         in: formData
- *         required: true
- *         type: string
- *       - name: version
- *         in: formData
- *         required: true
- *         type: string
- *       - name: page
- *         in: formData
- *         required: true
- *         type: number
- *       - name: success
- *         in: formData
- *         required: false
- *         type: bool
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               repo:
+ *                 type: string
+ *                 default: mmdetection
+ *               test_type:
+ *                  type: string
+ *                  default: test
+ *               version:
+ *                  type: string
+ *                  default: 3.0.0rc5
+ *               success:
+ *                  type: bool
+ *                  default: true
+ *               page:
+ *                  type: number
+ *                  default: 0
+ *             required:
+ *                - id
+ *                - test_type
+ *                - version
+ *                - page
+ *     responses:
+ *       '200':
+ *          description: Successful operation
  */
 router.post('/list_by_repo_and_version', async function (ctx, next) {
     // TODO Validation
@@ -115,29 +131,37 @@ router.post('/list_by_repo_and_version', async function (ctx, next) {
  *   post:
  *     tags:
  *       - benchmark_test
- *     produces:
+ *     consumes:
  *       - application/json
- *     parameters:
- *       - name: repo
- *         in: formData
- *         required: true
- *         type: string
- *       - name: test_type
- *         in: formData
- *         required: true
- *         type: string
- *       - name: branch
- *         in: formData
- *         required: true
- *         type: string
- *       - name: page
- *         in: formData
- *         required: true
- *         type: number
- *       - name: success
- *         in: formData
- *         required: false
- *         type: bool
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               repo:
+ *                 type: string
+ *                 default: mmdetection
+ *               test_type:
+ *                  type: string
+ *                  default: test
+ *               branch:
+ *                  type: string
+ *                  default: 3.0.0rc5
+ *               success:
+ *                  type: bool
+ *                  default: true
+ *               page:
+ *                  type: number
+ *                  default: 0
+ *             required:
+ *                - id
+ *                - test_type
+ *                - branch
+ *                - page
+ *     responses:
+ *       '200':
+ *          description: Successful operation
  */
 router.post('/list_by_repo_and_branch', async function (ctx, next) {
     // TODO Validation
@@ -176,17 +200,26 @@ router.post('/add_item', async function (ctx, next) {
  *   post:
  *     tags:
  *       - benchmark_test
- *     produces:
+ *     consumes:
  *       - application/json
- *     parameters:
- *       - name: id
- *         in: formData
- *         required: true
- *         type: string
- *       - name: test_type
- *         in: formData
- *         required: true
- *         type: string
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 default: 63e1fc9c3d747ae0f419e2cb
+ *               test_type:
+ *                  type: string
+ *                  default: test
+ *             required:
+ *                - id
+ *                - test_type
+ *     responses:
+ *       '200':
+ *          description: Successful operation
  */
 router.post('/delete_item_by_id', async function (ctx, next) {
     // TODO Validation
@@ -209,21 +242,30 @@ router.post('/delete_item_by_id', async function (ctx, next) {
  *   post:
  *     tags:
  *       - benchmark_test
- *     produces:
+ *     consumes:
  *       - application/json
- *     parameters:
- *       - name: id
- *         in: formData
- *         required: true
- *         type: string
- *       - name: test_type
- *         in: formData
- *         required: true
- *         type: string
- *       - name: data
- *         in: formData
- *         required: true
- *         type: model
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 default: 63e1fd7b3d747ae0f419e2cd
+ *               test_type:
+ *                  type: string
+ *                  default: test
+ *               data: 
+ *                  type: object
+ *                  default: {"success": true}
+ *             required:
+ *                - id
+ *                - test_type
+ *                - data
+ *     responses:
+ *       '200':
+ *          description: Successful operation
  */
 router.post('/update_item_by_id', async function (ctx, next) {
     // TODO Validation
@@ -235,27 +277,60 @@ router.post('/update_item_by_id', async function (ctx, next) {
     const db = mongo_client.db(MONGO_CONF.database)
     const collection = db.collection(type)
     console.log(data)
-    const result = await collection.updateOne({ _id: new ObjectId(id) }, {$set: data})
+    const result = await collection.updateOne({ _id: new ObjectId(id) }, { $set: data })
     await mongo_client.close()
     ctx.body = new SuccessModel(result)
 })
 
 
+/**
+ * @swagger
+ * /benchmark_test/get_model_history:
+ *   post:
+ *     tags:
+ *       - benchmark_test
+ *     consumes:
+ *       - application/json
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               repo:
+ *                 type: string
+ *                 default: mmdetection
+ *               config: 
+ *                  type: string
+ *                  default: configs/atss/atss_r50_fpn_1x_coco.py
+ *               test_type:
+ *                  type: string
+ *                  default: test
+ *               page: 
+ *                  type: string
+ *                  default: 0
+ *             required:
+ *                - name
+ *                - config
+ *                - test_type
+ *                - page
+ *     responses:
+ *       '200':
+ *          description: Successful operation
+ * 
+ */
 router.post('/get_model_history', async function (ctx, next) {
     // TODO Validation
-    const id = ctx.request.body.id
     const type = ctx.request.body.test_type
-    const data = ctx.request.body.data
+    const config = ctx.request.body.config
     const repo = ctx.request.body.repo
-    const branch = ctx.request.body.branch
-    const success = ctx.request.body.success
     const page = ctx.request.body.page
 
     await mongo_client.connect()
     const db = mongo_client.db(MONGO_CONF.database)
     const collection = db.collection(type)
-    console.log(data)
-    const result = await collection.updateOne({ _id: new ObjectId(id) }, { $set: data })
+    let query = { repo: repo, config: config }
+    const result = await collection.find(query).skip(Number(page) * 10).limit(10).toArray()
     await mongo_client.close()
     ctx.body = new SuccessModel(result)
 })

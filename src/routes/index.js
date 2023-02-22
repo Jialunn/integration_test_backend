@@ -12,6 +12,12 @@ router.get('/', async (ctx, next) => {
   })
 })
 
+/**
+ * @swagger
+ * /string:
+ *   get:
+ *     description:  test response
+ */
 router.get('/string', async (ctx, next) => {
   ctx.body = 'koa2 string'
 })
