@@ -2,7 +2,7 @@ const router = require('koa-router')()
 const mongo_client = require('../db/mongo')
 const ObjectId = require('mongodb').ObjectId
 const { MONGO_CONF } = require('../conf/db')
-const { SuccessModel, ErrorModel } = require('../model/ResModel')
+const { SuccessModel, ErrorModel, PageSuccessModel } = require('../model/ResModel')
 
 router.prefix('/benchmark_test')
 
@@ -295,16 +295,19 @@ router.post('/update_item_by_id', async function (ctx, next) {
  *                  default: test
  *               page: 
  *                  type: string
- *                  default: 0
+ *                  default: 1
+ *               page_size: 
+ *                  type: string
+ *                  default: 10
  *             required:
  *                - name
  *                - config
  *                - test_type
  *                - page
+ *                - page_size
  *     responses:
  *       '200':
  *          description: OK
- * 
  */
 router.post('/get_model_history', async function (ctx, next) {
     // TODO Validation
@@ -312,14 +315,22 @@ router.post('/get_model_history', async function (ctx, next) {
     const config = ctx.request.body.config
     const repo = ctx.request.body.repo
     const page = ctx.request.body.page
+    const page_size = ctx.request.body.page_size
+    const success = ctx.request.body.success
 
     await mongo_client.connect()
     const db = mongo_client.db(MONGO_CONF.database)
     const collection = db.collection(type)
-    let query = { repo: repo, config: config }
-    const result = await collection.find(query).skip(Number(page) * 10).limit(10).toArray()
+    let query = {}
+    if (String(success) === 'undefined') {
+        query = { repo: repo, config: config }
+    } else {
+        query = { repo: repo, config: config, success: success }
+    }
+    const result = await collection.find(query).skip((Number(page) - 1) * Number(page_size)).limit(Number(page_size)).toArray()
+    const pageNo = await collection.countDocuments(query)
     await mongo_client.close()
-    ctx.body = new SuccessModel(result)
+    ctx.body = new PageSuccessModel(result, 10, pageNo)
 })
 
 

@@ -23,6 +23,17 @@ class SuccessModel extends BaseModel {
 }
 
 /**
+ * 成功的数据模型
+ */
+class PageSuccessModel extends BaseModel {
+    constructor(data = {}, pageSize, pageNum) {
+        super({ code: 0, data })
+        this.pageSize = pageSize
+        this.pageNum = pageNum
+    }
+}
+
+/**
  * 失败的数据模型
  */
 class ErrorModel extends BaseModel {
@@ -35,5 +46,6 @@ class ErrorModel extends BaseModel {
 
 module.exports = {
     SuccessModel,
-    ErrorModel
+    ErrorModel,
+    PageSuccessModel
 }

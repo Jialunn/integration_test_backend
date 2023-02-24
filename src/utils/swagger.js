@@ -4,7 +4,7 @@ const swaggerJSDoc = require('swagger-jsdoc')
 const swaggerDefinition = {
     openapi: '3.0.0',
     info: {
-        title: 'Integration test API Doc',
+        title: 'Integration test Platform API Doc',
         version: '0.0.1',
         description: 'API doc of integration test platform',
     }
