@@ -32,10 +32,14 @@ router.prefix('/benchmark_test')
  *                  default: true
  *               page:
  *                  type: number
- *                  default: 0
+ *                  default: 1
+ *               page_size:
+ *                  type: number
+ *                  default: 10
  *             required:
  *                - test_type
  *                - page
+ *                - page_size
  *     responses:
  *       '200':
  *          description: OK
@@ -44,6 +48,7 @@ router.post('/list', async function (ctx, next) {
     // TODO Validation
     const type = ctx.request.body.test_type
     const page = ctx.request.body.page
+    const page_size = ctx.request.body.page_size
     const success = ctx.request.body.success
 
 
@@ -56,7 +61,7 @@ router.post('/list', async function (ctx, next) {
     } else {
         query = { success: success }
     }
-    const result = await collection.find(query).skip(Number(page) * 10).limit(10).toArray()
+    const result = await collection.find(query).skip((Number(page) - 1) * Number(page_size)).limit(10).toArray()
     await mongo_client.close()
     ctx.body = new SuccessModel(result)
 })
@@ -87,12 +92,16 @@ router.post('/list', async function (ctx, next) {
  *                  default: true
  *               page:
  *                  type: number
- *                  default: 0
+ *                  default: 1
+ *               page_size:
+ *                  type: number
+ *                  default: 10
  *             required:
  *                - id
  *                - test_type
  *                - version
  *                - page
+ *                - page_size
  *     responses:
  *       '200':
  *          description: OK
@@ -104,6 +113,7 @@ router.post('/list_by_repo_and_version', async function (ctx, next) {
     const version = ctx.request.body.version
     const success = ctx.request.body.success
     const page = ctx.request.body.page
+    const page_size = ctx.request.body.page_size
 
 
     await mongo_client.connect()
@@ -115,7 +125,7 @@ router.post('/list_by_repo_and_version', async function (ctx, next) {
     }else{
         query = { repo: repo, test_version: version, success: success }
     }
-    const result = await collection.find(query).skip(Number(page) * 10).limit(10).toArray()
+    const result = await collection.find(query).skip((Number(page) - 1) * Number(page_size)).limit(10).toArray()
     await mongo_client.close()
     ctx.body = new SuccessModel(result)
 })
@@ -146,12 +156,16 @@ router.post('/list_by_repo_and_version', async function (ctx, next) {
  *                  default: true
  *               page:
  *                  type: number
- *                  default: 0
+ *                  default: 1
+ *               page_size:
+ *                  type: number
+ *                  default: 10
  *             required:
  *                - id
  *                - test_type
  *                - branch
  *                - page
+ *                - page_size
  *     responses:
  *       '200':
  *          description: OK
@@ -163,6 +177,7 @@ router.post('/list_by_repo_and_branch', async function (ctx, next) {
     const branch = ctx.request.body.branch
     const success = ctx.request.body.success
     const page = ctx.request.body.page
+    const page_size = ctx.request.body.page_size
 
 
     await mongo_client.connect()
@@ -174,7 +189,7 @@ router.post('/list_by_repo_and_branch', async function (ctx, next) {
     } else {
         query = { repo: repo, branch: branch, success: success }
     }
-    const result = await collection.find(query).skip(Number(page) * 10).limit(10).toArray()
+    const result = await collection.find(query).skip((Number(page) - 1) * Number(page_size)).limit(10).toArray()
     await mongo_client.close()
     ctx.body = new SuccessModel(result)
 })
