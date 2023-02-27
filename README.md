@@ -2,6 +2,8 @@
 
 > Integration test platform backend server <br>
 > API:           `http://host:port/swagger`
+> docker build : docker build -t integration_test_backend:v1 .
+> docker run   : docker run -d --rm --name integration_test_backend -p 5158:5158 integration_test_backend
 
 ## Intro
 
