@@ -86,7 +86,7 @@ router.post('/list', async function (ctx, next) {
  *                  default: test
  *               version:
  *                  type: string
- *                  default: 3.0.0rc5
+ *                  default: benchmark_mmdet_20230220
  *               success:
  *                  type: boolean
  *                  default: true
