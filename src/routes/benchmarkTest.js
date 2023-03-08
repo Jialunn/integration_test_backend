@@ -379,15 +379,49 @@ router.post('/add_group', async function (ctx, next) {
  * /benchmark_test/list_group:
  *   post:
  *     tags:
- *        - benchmark_test
+ *       - benchmark_test
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               test_type:
+ *                  type: string
+ *                  default: test
+ *               page:
+ *                  type: number
+ *                  default: 1
+ *               page_size:
+ *                  type: number
+ *                  default: 10
+ *             required:
+ *                - page
+ *                - page_size
  *     responses:
  *       '200':
  *          description: OK
  */
 router.post('/list_group', async function (ctx, next) {
-    ctx.body = {
-        benchmark_test: 'ok'
+    // TODO Validation
+    const type = ctx.request.body.test_type
+    const page = ctx.request.body.page
+    const page_size = ctx.request.body.page_size
+
+
+    await mongo_client.connect()
+    const db = mongo_client.db(MONGO_CONF.database)
+    const collection = db.collection('list')
+    let query = {}
+    if (String(type) === 'undefined') {
+        query = {}
+    } else {
+        query = { task_type: type }
     }
+    const result = await collection.find(query).skip((Number(page) - 1) * Number(page_size)).limit(10).toArray()
+    const pageNo = await collection.countDocuments(query)
+    await mongo_client.close()
+    ctx.body = new PageSuccessModel(result, page_size, pageNo)
 })
 
 router.post('/delete_group_by_id', async function (ctx, next) {
