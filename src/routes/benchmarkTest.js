@@ -330,7 +330,7 @@ router.post('/update_item_by_id', async function (ctx, next) {
 router.post('/get_model_history', async function (ctx, next) {
     // TODO Validation
     const type = ctx.request.body.test_type
-    const config = ctx.request.body.config
+    const model = ctx.request.body.model
     const repo = ctx.request.body.repo
     const page = ctx.request.body.page
     const page_size = ctx.request.body.page_size
@@ -341,9 +341,9 @@ router.post('/get_model_history', async function (ctx, next) {
     const collection = db.collection(type)
     let query = {}
     if (String(success) === 'undefined') {
-        query = { repo: repo, config: config }
+        query = { repo: repo, case: model }
     } else {
-        query = { repo: repo, config: config, success: success }
+        query = { repo: repo, case: model, success: success }
     }
     const result = await collection.find(query).skip((Number(page) - 1) * Number(page_size)).limit(Number(page_size)).toArray()
     const pageNo = await collection.countDocuments(query)
