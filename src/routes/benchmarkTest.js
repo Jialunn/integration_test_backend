@@ -408,7 +408,6 @@ router.post('/list_group', async function (ctx, next) {
     const page = ctx.request.body.page
     const page_size = ctx.request.body.page_size
 
-
     await mongo_client.connect()
     const db = mongo_client.db(MONGO_CONF.database)
     const collection = db.collection('list')
@@ -422,6 +421,26 @@ router.post('/list_group', async function (ctx, next) {
     const pageNo = await collection.countDocuments(query)
     await mongo_client.close()
     ctx.body = new PageSuccessModel(result, page_size, pageNo)
+})
+
+router.post('/get_group', async function (ctx, next) {
+    // TODO Validation
+    const type = ctx.request.body.test_type
+    const version = ctx.request.body.version
+    const repo = ctx.request.body.repo
+
+    await mongo_client.connect()
+    const db = mongo_client.db(MONGO_CONF.database)
+    const collection = db.collection('list')
+    let query = {}
+    if (String(type) === 'undefined') {
+        query = { repo: repo, test_version: version }
+    }else{
+        query = { repo: repo, test_version: version, task_type: type }
+    }
+    const result = await collection.find(query).toArray()
+    await mongo_client.close()
+    ctx.body = new PageSuccessModel(result)
 })
 
 router.post('/delete_group_by_id', async function (ctx, next) {
