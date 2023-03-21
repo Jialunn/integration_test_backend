@@ -3,6 +3,7 @@ const mongo_client = require('../db/mongo')
 const ObjectId = require('mongodb').ObjectId
 const { MONGO_CONF } = require('../conf/db')
 const { SuccessModel, ErrorModel, PageSuccessModel } = require('../model/ResModel')
+const { da } = require('date-fns/locale')
 
 router.prefix('/benchmark_test')
 
@@ -283,7 +284,6 @@ router.post('/update_item_by_id', async function (ctx, next) {
     await mongo_client.connect()
     const db = mongo_client.db(MONGO_CONF.database)
     const collection = db.collection(type)
-    console.log(data)
     const result = await collection.updateOne({ _id: new ObjectId(id) }, { $set: data })
     await mongo_client.close()
     ctx.body = new SuccessModel(result)
