@@ -1,3 +1,5 @@
+const {th} = require("date-fns/locale");
+
 /**
  * Feishu Command Class, parse command to jenkins job
  *
@@ -23,9 +25,13 @@ class FeishuCommand {
      *
      *            'job [job_name] param1=s1;param2=s2'
      *
-     *         4. special job type, custom (for example: daily)
+     *         4. special job type, custom (for example: help)
      *
-     *            'daily [job_name] [v1 or v2]'
+     *            'help'
+     *
+     *            'help [job_name]'
+     *
+     *            'help [dir_path]/[job_name]'
      *
      *         5. WIP
      *
@@ -36,7 +42,7 @@ class FeishuCommand {
     constructor(feishu_command) {
         this.feishu_command = feishu_command
         this.job_name = ''
-        this.params = {}
+        this.params = null
         this.type = ''
 
         this.tokenize()
@@ -46,7 +52,14 @@ class FeishuCommand {
      * tokenize feishu cmd to Object attr
      */
     tokenize() {
-        let ir = self.cmd.split(' ')
+        let ir = this.feishu_command.split(' ')
+        // Handle
+        if (ir[ir.length - 1] === "help") {
+            this.type = 'help'
+            this.job_name = "help"
+            this.params = {params: ir.slice(0, ir.length - 1)}
+            return
+        }
         this.type = ir[0]
         ir = ir.slice(1, ir.length)
         this.job_name = ir[0]
@@ -65,11 +78,12 @@ class FeishuCommand {
 
             // 3
             if (ir.length === 1 && ir[0].indexOf('=') !== -1) {
-                const pa = ir.split(';')
+                this.params = {}
+                const pa = ir[0].split(';')
                 for(let j in pa){
-                    const param_pair = j.split("=")
+                    const param_pair = pa[j].split("=")
                     if(param_pair.length !== 2) {
-                        throw Error("Syntax error! please send params in right way")
+                        throw Error("Syntax error! please send params in a right way")
                     }
                     this.params[param_pair[0]] = param_pair[1]
                 }
@@ -77,8 +91,7 @@ class FeishuCommand {
             }
             throw Error("can not tokenize feishu cmd! please send params in right way")
         } else {
-            // 4
-            this.params = {'params': ir}
+            throw Error("cmd " + this.type + " not support yet. try @bot jenkins help")
         }
     }
 }

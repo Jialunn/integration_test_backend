@@ -146,7 +146,12 @@ class HelpMessageSender extends BaseMessageSender {
                     "**启动有参数，但使用默认参数的Jenkins Job**\n" +
                     "@bot jenkins job [job_name] default\n" +
                     "**启动有参数的Jenkins Job(参数名不能有空格)**\n" +
-                    "@bot jenkins job [job_name] param1=p1;param2=p2\n"
+                    "@bot jenkins job [job_name] param1=p1;param2=p2\n" +
+                    "\n" +
+                    "可以通过 **@bot jenkins job help** 查看可以构建哪些job\n" +
+                    "可以通过 **@bot jenkins job [job_name] help** 查看构建需要的参数(或者目录下的job列表)\n" +
+                    "\n" +
+                    "**祝您用的开心**"
                 break
             default:
                 let msg_content
