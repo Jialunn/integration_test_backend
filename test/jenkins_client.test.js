@@ -4,13 +4,22 @@ const jenkins = new Jenkins({
 })
 // console.log(await jenkins.info())
 
-test("test jenkins create with no prarm", async () => {
+test("test jenkins create with no param", async () => {
     const result = await jenkins.job.build("mmcv/test_no_param")
     expect(typeof(result)).toBe("number")
 })
 
 
-test("test jenkins create with default prarm", async () => {
+// //Error: jenkins: job.build: internal server error
+// test("test jenkins create with no param 2", async () => {
+//     const result = await jenkins.job.build({
+//         name: "mmcv/test_no_param",
+//         parameters: {},
+//     })
+//     expect(typeof(result)).toBe("number")
+// })
+
+test("test jenkins create with default param", async () => {
     const result = await jenkins.job.build({
         name: "mmcv/test_with_param",
         parameters: {},
@@ -19,7 +28,7 @@ test("test jenkins create with default prarm", async () => {
 })
 
 
-test("test jenkins create with prarm", async () => {
+test("test jenkins create with param", async () => {
     const result = await jenkins.job.build({
         name: "mmcv/test_with_param",
         parameters: { ECHO_PARAM: "special" },
