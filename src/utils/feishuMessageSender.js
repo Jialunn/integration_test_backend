@@ -148,18 +148,15 @@ class HelpMessageSender extends BaseMessageSender {
                     "**启动有参数的Jenkins Job(参数名不能有空格)**\n" +
                     "@bot jenkins job [job_name] param1=p1;param2=p2\n" +
                     "\n" +
-                    "可以通过 **@bot jenkins job help** 查看可以构建哪些job\n" +
-                    "可以通过 **@bot jenkins job [job_name] help** 查看构建需要的参数(或者目录下的job列表)\n" +
-                    "\n" +
                     "**祝您用的开心**"
                 break
             default:
                 let msg_content
-                for(let i in this.msg['job_contents']) {
+                for (let i in this.msg['job_contents']) {
                     msg_content += this.msg['job_contents'][i] + '\n'
                 }
                 content = "**" + this.job_name + " 是一个" + this.msg['job_type'] + "**\n" +
-                     "它包含了以下" + this.msg['content_type'] + "\n" + msg_content
+                    "它包含了以下" + this.msg['content_type'] + "\n" + msg_content
         }
 
         return {
@@ -167,7 +164,13 @@ class HelpMessageSender extends BaseMessageSender {
             "elements": [
                 {"tag": "markdown", "content": content, "href": {}},
                 {"tag": "hr"},
-                {"tag": "markdown", "content": "*可定制批量启动命令，如有需求，可联系QA*", "href": {}}
+                {
+                    "tag": "markdown",
+                    "content": "可以通过 **@bot jenkins job help** 查看可以构建哪些job\n" +
+                        "可以通过 **@bot jenkins job [job_name] help** 查看构建需要的参数(或者目录下的job列表)\n\n" +
+                        "*可定制批量启动命令，如有需求，可联系QA*",
+                    "href": {}
+                }
             ],
             "header": {
                 "template": "blue", "title": {"content": "帮助文档", "tag": "plain_text"}

@@ -11,6 +11,7 @@ class TaskRunner {
         this.name = name
         this.feishu_cmd = feishu_cmd
         this.running = false
+        this.build_id = -1
     }
 
     run() {
