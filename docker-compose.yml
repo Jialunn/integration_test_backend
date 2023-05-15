@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  redis:
+    image: redis:7.0.11
+    container_name: integration_test_be_redis
+    restart: always
+    # It may not work 👻
+    expose:
+      - "6379"
+    volumes:
+      - ./src/conf/redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    privileged: true
+  integration_test_be:
+    image: integration_test_backend:latest
+    container_name: integration_test_be
+    privileged: true
+    restart: always
+    volumes:
+      - ./:/workspace
+    ports:
+      - "5158:5158"
+    environment:
+      - Author=lijialun
+    command: npm run prd_docker
+    depends_on:
+      - redis

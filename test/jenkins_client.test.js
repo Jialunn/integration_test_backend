@@ -19,6 +19,11 @@ test("test jenkins create with no param", async () => {
 //     expect(typeof(result)).toBe("number")
 // })
 
+test("test jenkins get logs", async () => {
+    const data = await jenkins.build.log("mmcv/test_no_param", 10)
+    console.log('log', data);
+})
+
 test("test jenkins create with default param", async () => {
     const result = await jenkins.job.build({
         name: "mmcv/test_with_param",

@@ -2,7 +2,9 @@ const { isProd } = require('../utils/env')
 
 let REDIS_CONF = {
     port: 6379,
-    host: '127.0.0.1'
+    host: '127.0.0.1',
+    db: 1,
+    password: ""
 }
 
 let MYSQL_CONF = {
@@ -25,7 +27,9 @@ if (isProd) {
     REDIS_CONF = {
         // 线上的 redis 配置
         port: 6379,
-        host: '127.0.0.1'
+        host: 'redis',
+        password: "",
+        db: 1
     }
 
     MYSQL_CONF = {
