@@ -5,7 +5,6 @@ const {MSG_SENDER_BASE_URL} = require('../conf/constant')
 
 class BaseMessageSender {
     constructor(group_name) {
-        this.msg_content = this.content_gen()
         this.group_name = group_name
     }
 
@@ -33,6 +32,7 @@ class DailyTestErrorMessageSender extends BaseMessageSender {
         super(group_name)
         this.build_url = build_url + "/console"
         this.repo_name = repo_name
+        this.msg_content = this.content_gen()
     }
 
     content_gen() {
@@ -61,6 +61,7 @@ class JobStartedMessageSender extends BaseMessageSender {
             sub_path += '/job/' + i
         }
         this.job_url = 'http://ci.pjlab.org.cn' + sub_path
+        this.msg_content = this.content_gen()
     }
 
     content_gen() {
@@ -85,6 +86,7 @@ class JobStartErrorMessageSender extends BaseMessageSender {
         super(group_name)
         this.job_name = job_name
         this.content = content
+        this.msg_content = this.content_gen()
     }
 
     content_gen(self) {
@@ -112,6 +114,7 @@ class TaskStartedMessageSender extends BaseMessageSender {
     constructor(group_name) {
         super(group_name)
         this.ci_url = 'http://ci.pjlab.org.cn'
+        this.msg_content = this.content_gen()
     }
 
     content_gen() {
@@ -135,11 +138,20 @@ class HelpMessageSender extends BaseMessageSender {
         super(group_name)
         this.job_name = msg.job_name
         this.msg = msg
+        this.msg_content = this.content_gen()
     }
 
     content_gen() {
         let content
+        let msg_content = ''
         switch (this.job_name) {
+            case "job":
+                for (let i in this.msg['job_contents']) {
+                    msg_content += this.msg['job_contents'][i] + '\n'
+                }
+                content = "**欢迎使用Jenkins (飞书定制版)**\n" +
+                    "它包含了以下*" + this.msg['content_type'] + "*\n\n" + msg_content
+                break
             case "root_help":
                 content = "**启动无参数的Jenkins Job**\n" +
                     "@bot jenkins job [job_name]\n" +
@@ -151,12 +163,12 @@ class HelpMessageSender extends BaseMessageSender {
                     "**祝您用的开心**"
                 break
             default:
-                let msg_content
+
                 for (let i in this.msg['job_contents']) {
                     msg_content += this.msg['job_contents'][i] + '\n'
                 }
                 content = "**" + this.job_name + " 是一个" + this.msg['job_type'] + "**\n" +
-                    "它包含了以下" + this.msg['content_type'] + "\n" + msg_content
+                    "它包含了以下*" + this.msg['content_type'] + "*\n\n" + msg_content
         }
 
         return {
