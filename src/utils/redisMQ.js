@@ -2,6 +2,7 @@ const {createClient} = require('redis')
 
 const {REDIS_CONF} = require('../conf/db')
 const {MQ_LIST} = require('../conf/mq')
+const {th} = require("date-fns/locale");
 
 
 const redisCreateClient = async (config) => {
@@ -22,17 +23,32 @@ const redisCreateClient = async (config) => {
 class RedisMQ{
     constructor() {
         this.mq = redisCreateClient(REDIS_CONF)
+        this.waiting_q = 'SHQA_task_waiting_q'
+        this.running_q = 'SHQA_task_running_q'
     }
 
-    put() {
+
+    put_task(q_name) {
 
     }
 
-    pop() {
+    run_task() {
 
     }
 
-    get_len() {
+    finish_task(q_name) {
+
+    }
+
+    _put(q_name, task) {
+
+    }
+
+    _pop(q_name) {
+
+    }
+
+    get_len(q_name) {
 
     }
 

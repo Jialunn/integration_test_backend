@@ -64,14 +64,6 @@ class Poller {
         this.BotURL = BotURL
     }
 
-    parse_res(res){
-        res = res["data"].replace("\\", "").split('>')
-        if(res.length === 2){
-            return res
-        }
-        return res.push(DEBUG_GROUP)
-    }
-
     task_selector(feishu_cmd) {
         const type = feishu_cmd.type
         switch (type) {
@@ -86,6 +78,18 @@ class Poller {
         throw Error("Wrong task type")
     }
 
+    async handler(cmd) {
+        try {
+            let feishu_cmd =  new FeishuCommand(cmd)
+            let Runner = this.task_selector(feishu_cmd)
+            await new Runner(feishu_cmd).run()
+        } catch (e) {
+            logger.error(e)
+            // TODO Add error handler
+            // TODO send error msg to group
+        }
+    }
+
     async poll() {
         const request_body = {
             "header": {"event_id": uuidv4(), "event_type": "MQ"},
@@ -94,16 +98,12 @@ class Poller {
 
         try{
             let res = await axios.post(this.BotURL)
-            let [cmd, group_name] = this.parse_res(res)
-            let feishu_cmd =  new FeishuCommand(cmd)
-
-            let Runner = this.task_selector(feishu_cmd)
-
+            // TODO 调用handler
 
         } catch (e) {
             logger.error(e)
             // TODO Add error handler
-            // TODO send msg
+            // TODO send error msg to DEBUG_GROUP
         }
     }
 }

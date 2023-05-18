@@ -1,4 +1,4 @@
-const {th} = require("date-fns/locale");
+const {DEBUG_GROUP} = require("../conf/constant");
 
 /**
  * Feishu Command Class, parse command to jenkins job
@@ -44,14 +44,26 @@ class FeishuCommand {
         this.job_name = ''
         this.params = null
         this.type = ''
+        this.group_name = DEBUG_GROUP
 
         this.tokenize()
+    }
+
+    parse_res(cmd){
+        const res_list = cmd.replace("\\", "").split('>')
+        if(res_list.length === 2){
+            this.feishu_command = res_list[0]
+            this.group_name = res_list[1]
+            return
+        }
+        this.feishu_command = res_list[0]
     }
 
     /**
      * tokenize feishu cmd to Object attr
      */
     tokenize() {
+        this.parse_res(this.feishu_command)
         let ir = this.feishu_command.split(' ')
         // Handle
         if (ir[ir.length - 1] === "help") {

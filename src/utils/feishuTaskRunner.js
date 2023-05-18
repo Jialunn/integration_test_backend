@@ -1,12 +1,13 @@
-const {exec} = require('node:child_process')
+const {exec} = require('child_process')
 
 const {logger} = require("../utils/logger")
-const {build_with_param, build_with_no_param} = require('./jenkins')
+const {build_with_param, build_with_no_param, get_job_info, get_job_list} = require('./jenkins') // TODO need try catch
 const {HelpMessageSender} = require('./feishuMessageSender')
 
+const {DEBUG_GROUP} = require('../conf/constant')
 
 class TaskRunner {
-    constructor(feishu_cmd, name = "HelpRunner") {
+    constructor(feishu_cmd, name = "TaskRunner") {
         logger.debug(name + " runner init")
         this.name = name
         this.feishu_cmd = feishu_cmd
@@ -14,7 +15,7 @@ class TaskRunner {
         this.build_id = -1
     }
 
-    run() {
+    async run() {
         logger.debug(this.name + ": Runner started")
 
     }
@@ -46,15 +47,20 @@ class HelpRunner {
         logger.debug(name + " runner init")
         this.name = name
         this.feishu_cmd = feishu_cmd
-        this.running = false
     }
 
-
-    // 根目录直接调用
-    // job直接返回目录(标明每种任务的类型)
-    // 任务的help根据任务类型返回 1. job返回是否有参数 2. 目录返回list 3. 记为TODO来跟踪新内容
-    run() {
-        const sender = new HelpMessageSender()
+    async run() {
+        const group_name = this.feishu_cmd.group_name
+        const params = this.feishu_cmd.params.params
+        let job_name = ''
+        if (params.length === 0) {
+            job_name = "root_help"
+        } else {
+            job_name = params[params.length - 1]
+        }
+        const content = await get_job_info(job_name)
+        const sender = new HelpMessageSender(group_name, content)
+        await sender.send_msg()
     }
 }
 

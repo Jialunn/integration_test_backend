@@ -1,4 +1,5 @@
 const {FeishuCommand} = require("../src/utils/feishuTokenizer")
+const {DEBUG_GROUP} = require("../src/conf/constant")
 
 test("test feishu cmd parse", () => {
     const cmd = [
@@ -9,6 +10,7 @@ test("test feishu cmd parse", () => {
         "job help",
         "job mmyolo/test help",
         "job mmyolo help",
+        "help"
     ]
 
     const out = [
@@ -19,6 +21,7 @@ test("test feishu cmd parse", () => {
         ['help', 'help', {params: ['job']}],
         ['help', 'help', {params: ['job', 'mmyolo/test']}],
         ['help', 'help', {params: ['job', 'mmyolo']}],
+        ['help', 'help', {params: []}],
     ]
     for (let i in cmd) {
         const feishu_cmd = new FeishuCommand(cmd[i])
@@ -29,6 +32,6 @@ test("test feishu cmd parse", () => {
         } else {
             expect(JSON.stringify(feishu_cmd.params)).toBe(JSON.stringify(out[i][2]))
         }
-
+        expect(feishu_cmd.group_name).toBe(DEBUG_GROUP)
     }
 })

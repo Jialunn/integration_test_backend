@@ -102,7 +102,7 @@ class JobStartErrorMessageSender extends BaseMessageSender {
                 }
             ],
             "header": {
-                "template": "red", "title": {"content": "任务启动错误", "tag": "plain_text"}
+                "template": "red", "title": {"content": "任务启动错误: " + this.job_name, "tag": "plain_text"}
             }
         }
     }
@@ -178,7 +178,8 @@ class HelpMessageSender extends BaseMessageSender {
                 {"tag": "hr"},
                 {
                     "tag": "markdown",
-                    "content": "可以通过 **@bot jenkins job help** 查看可以构建哪些job\n" +
+                    "content": "可以通过 **@bot jenkins help**获取命令标准格式\n" +
+                        "可以通过 **@bot jenkins job help** 查看可以构建哪些job\n" +
                         "可以通过 **@bot jenkins job [job_name] help** 查看构建需要的参数(或者目录下的job列表)\n\n" +
                         "*可定制批量启动命令，如有需求，可联系QA*",
                     "href": {}

@@ -40,3 +40,33 @@ test("test jenkins create with param", async () => {
     })
     expect(typeof (result)).toBe("number")
 })
+
+test("test jenkins get list", async () => {
+    const data = await jenkins.job.list()
+    console.log('jobs', data)
+})
+
+test("test jenkins get job(dir)", async () => {
+    const data = await jenkins.job.get("mmaction2")
+    console.log('jobs', data)
+    console.log('jobs', data.jobs)
+})
+
+test("test jenkins get job(dir) 2", async () => {
+    const data = await jenkins.job.get("mmcv/test_no_param")
+    console.log('jobs', data)
+})
+
+test("test jenkins get job(dir) params", async () => {
+    const data = await jenkins.job.get("mmcv/test_with_param")
+    console.log('plugin', data.actions[0])
+    console.log('param', data.actions[0].parameterDefinitions)
+    console.log('param default value', data.actions[0].parameterDefinitions[0].defaultParameterValue.value)
+})
+
+test("test jenkins get job(dir) params(no param)", async () => {
+    const data = await jenkins.job.get("mmcv/test_no_param")
+    console.log('plugin', data.actions[0])
+    console.log('param', data.actions[0].parameterDefinitions)
+    // console.log('param default value', data.actions[0].parameterDefinitions[0].defaultParameterValue.value)
+})
