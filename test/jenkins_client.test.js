@@ -33,6 +33,14 @@ test("test jenkins create with default param", async () => {
 })
 
 
+test("test jenkins create with other param", async () => {
+    const result = await jenkins.job.build({
+        name: "mmcv/test_with_param",
+        parameters: {group_name: '小金的一天'},
+    })
+    expect(typeof (result)).toBe("number")
+})
+
 test("test jenkins create with param", async () => {
     const result = await jenkins.job.build({
         name: "mmcv/test_with_param",

@@ -9,10 +9,11 @@ test('test help runner', async () => {
         "job mmyolo/daily_test_v2 help",
         "job mmyolo help",
         "help",
-        // "job help>李佳伦的机器人小屋",
-        // "job mmyolo/test help>李佳伦的机器人小屋",
-        // "job mmyolo help>李佳伦的机器人小屋",
-        // "help>李佳伦的机器人小屋"
+        "job help>李佳伦的机器人小屋",
+        "job mmyolo/test help>李佳伦的机器人小屋",
+        "job mmyolo/daily_test_v2 help>李佳伦的机器人小屋",
+        "job mmyolo help>李佳伦的机器人小屋",
+        "help>李佳伦的机器人小屋"
     ]
 
     for (let index in cmd_list) {
